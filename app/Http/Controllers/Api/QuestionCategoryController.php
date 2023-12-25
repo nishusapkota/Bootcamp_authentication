@@ -64,7 +64,7 @@ class QuestionCategoryController extends Controller
     public function destroy(QuestionCategory $questionCategory)
     {
         $questionCategory->delete();
-        
+
         return response()->noContent();
     }
 }
