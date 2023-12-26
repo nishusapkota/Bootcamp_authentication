@@ -2,15 +2,34 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Question;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class QuestionCategory extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 
-protected $fillable=[
-    'title',
-    'slug'
-];
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+        'slug'
+    ];
+
+    /**
+     * @return HasMany
+     */
+    public function questions(): HasMany
+    {
+        return $this->hasMany(Question::class,'category_id');
+    }
+
+    public function quizzes(): HasMany
+    {
+        return $this->hasMany(Quiz::class,'category_id');
+    }
 }
