@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Quiz;
 use App\Models\Question;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -28,8 +29,4 @@ class QuestionCategory extends Model
         return $this->hasMany(Question::class,'category_id');
     }
 
-    public function quizzes(): HasMany
-    {
-        return $this->hasMany(Quiz::class,'category_id');
-    }
 }

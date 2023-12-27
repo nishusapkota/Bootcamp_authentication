@@ -23,9 +23,9 @@ class QuizUpdateRequest extends FormRequest
 {
     return [
         'title' => 'string|required|max:255',
-        'slug' => 'string|required|max:255|unique:quizzes,slug,' . $this->route('quiz')->id,
+        'slug' => 'string|required|max:255|unique:quizzes,slug,'.$this->route('quiz'),
         'category_id' => 'required|exists:quiz_categories,id',
-        'thumbnail' => 'required|image|mimes:png,jpg,jpeg,gif',
+        'thumbnail' => 'nullable|image|mimes:png,jpg,jpeg,gif',
         'description' => 'nullable|string|max:4000',
         'time' => 'required|string',
         'retry_after' => 'required|string',

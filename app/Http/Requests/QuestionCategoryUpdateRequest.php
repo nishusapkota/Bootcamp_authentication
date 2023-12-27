@@ -23,7 +23,7 @@ class QuestionCategoryUpdateRequest extends FormRequest
     {
         return [
             'title'=>'required|string|max:255',
-            'slug'=>'required|string|max:255|unique:question_categories,slug,'.$this->route('questionCategory')->id
+            'slug'=>'required|string|max:255|unique:question_categories,slug,'.$this->route('questionCategory')
         ];
     }
 }

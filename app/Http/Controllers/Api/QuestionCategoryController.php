@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Models\QuestionCategory;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\QuestionCategoryResource;
-use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Requests\QuestionCategoryStoreRequest;
 use App\Http\Requests\QuestionCategoryUpdateRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -15,9 +14,9 @@ class QuestionCategoryController extends Controller
     /**
      * @return AnonymousResourceCollection
      */
-    public function index():AnonymousResourceCollection
+    public function index(): AnonymousResourceCollection
     {
-        $categories=QuestionCategory::paginate(1);
+        $categories = QuestionCategory::paginate(1);
         return QuestionCategoryResource::collection($categories);
     }
 
@@ -25,12 +24,10 @@ class QuestionCategoryController extends Controller
      * @param QuestionCategoryStoreRequest $request
      * @return QuestionCategoryResource
      */
-    public function store(QuestionCategoryStoreRequest $request):QuestionCategoryResource
+    public function store(QuestionCategoryStoreRequest $request): QuestionCategoryResource
     {
-        $data=$request->validated();
-
-        $category=QuestionCategory::create($data);
-
+        $data = $request->validated();
+        $category = QuestionCategory::create($data);
         return new QuestionCategoryResource($category);
     }
 
@@ -38,9 +35,9 @@ class QuestionCategoryController extends Controller
      * @param QuestionCategory $category
      * @return QuestionCategoryResource
      */
-    public function show(QuestionCategory $questionCategory):QuestionCategoryResource
+    public function show(QuestionCategory $questionCategory): QuestionCategoryResource
     {
-     return new QuestionCategoryResource($questionCategory);
+        return new QuestionCategoryResource($questionCategory);
     }
 
     /**
@@ -48,13 +45,11 @@ class QuestionCategoryController extends Controller
      * @param QuestionCategoryUpdateRequest $request
      * @return QuestionCategoryResource
      */
-    public function update(QuestionCategory $questionCategory,QuestionCategoryUpdateRequest $request):QuestionCategoryResource
+    public function update(QuestionCategory $questionCategory, QuestionCategoryUpdateRequest $request): QuestionCategoryResource
     {
-       $data=$request->validated();
-
-       $category_updated=$questionCategory->update($data);
-
-       return new QuestionCategoryResource($category_updated);
+        $data = $request->validated();
+        $questionCategory->update($data);
+        return new QuestionCategoryResource($questionCategory);
     }
 
     /**
@@ -64,7 +59,6 @@ class QuestionCategoryController extends Controller
     public function destroy(QuestionCategory $questionCategory)
     {
         $questionCategory->delete();
-
         return response()->noContent();
     }
 }
