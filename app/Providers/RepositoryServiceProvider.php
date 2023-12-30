@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
-use App\Repositories\Interfaces\QuestionCategoryRepositoryInterface;
-use App\Repositories\QuestionCategoryRepository;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\QuestionRepository;
+use App\Repositories\QuestionCategoryRepository;
+use App\Repositories\Interfaces\QuestionRepositoryInterface;
+use App\Repositories\Interfaces\QuestionCategoryRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -21,6 +23,7 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-       $this->app->bind(QuestionCategoryRepositoryInterface::class,QuestionCategoryRepository::class);
+        $this->app->bind(QuestionCategoryRepositoryInterface::class, QuestionCategoryRepository::class);
+        $this->app->bind(QuestionRepositoryInterface::class, QuestionRepository::class);
     }
 }

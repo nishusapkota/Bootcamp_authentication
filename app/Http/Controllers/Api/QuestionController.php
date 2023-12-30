@@ -7,16 +7,24 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\QuestionResource;
 use App\Http\Requests\QuestionStoreRequest;
 use App\Http\Requests\QuestionUpdateRequest;
+use App\Repositories\Interfaces\QuestionRepositoryInterface;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class QuestionController extends Controller
 {
+    private $questionRepository;
+
+    public function __construct(QuestionRepositoryInterface $questionRepository)
+    {
+        $this->questionRepository=$questionRepository;
+    }
+
     /**
      * @return AnonymousResourceCollection
      */
     public function index():AnonymousResourceCollection
     {
-        $questions=Question::all();
+        $questions=$this->questionRepository->all();
         return QuestionResource::collection($questions);
     }
 
@@ -27,7 +35,7 @@ class QuestionController extends Controller
     public function store(QuestionStoreRequest $request):QuestionResource
     {
        $data=$request->validated();
-       $question=Question::create($data);      
+       $question=$this->questionRepository->store($data);      
        return new QuestionResource($question);
     }
 
@@ -46,7 +54,7 @@ class QuestionController extends Controller
     public function update(QuestionUpdateRequest $request,Question $question)
     {
         $data=$request->validated();
-        $question->update($data);
+        $this->questionRepository->update($data,$question);
         return new QuestionResource($question);
 
     }
