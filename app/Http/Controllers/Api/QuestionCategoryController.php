@@ -7,16 +7,25 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\QuestionCategoryResource;
 use App\Http\Requests\QuestionCategoryStoreRequest;
 use App\Http\Requests\QuestionCategoryUpdateRequest;
+use App\Repositories\Interfaces\QuestionCategoryRepositoryInterface;
+
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class QuestionCategoryController extends Controller
 {
+    private $questionCategoryRepository;
+
+    public function __construct(QuestionCategoryRepositoryInterface $questionCategoryRepository)
+    {
+        $this->questionCategoryRepository = $questionCategoryRepository;
+    }
+
     /**
      * @return AnonymousResourceCollection
      */
     public function index(): AnonymousResourceCollection
     {
-        $categories = QuestionCategory::paginate(1);
+        $categories = $this->questionCategoryRepository->getAll();
         return QuestionCategoryResource::collection($categories);
     }
 
@@ -27,7 +36,7 @@ class QuestionCategoryController extends Controller
     public function store(QuestionCategoryStoreRequest $request): QuestionCategoryResource
     {
         $data = $request->validated();
-        $category = QuestionCategory::create($data);
+        $category = $this->questionCategoryRepository->store($data);
         return new QuestionCategoryResource($category);
     }
 
@@ -48,7 +57,7 @@ class QuestionCategoryController extends Controller
     public function update(QuestionCategory $questionCategory, QuestionCategoryUpdateRequest $request): QuestionCategoryResource
     {
         $data = $request->validated();
-        $questionCategory->update($data);
+        $this->questionCategoryRepository->update($data,$questionCategory);
         return new QuestionCategoryResource($questionCategory);
     }
 
