@@ -24,7 +24,7 @@ class QuizResource extends JsonResource
             'time' => $this->time,
             'retry_after' => $this->retry_after,
             'status' => $this->status,
-            'question_id' => $this->question_id,
+            'questionCategory_id' => $this->questionCategory_id,
         ];
     }
 }

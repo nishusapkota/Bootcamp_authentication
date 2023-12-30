@@ -22,7 +22,7 @@ class Quiz extends Model
         'time',
         'retry_after',
         'status',
-        'question_id'
+        'questionCategory_id'
     ];
 
     /**
@@ -36,8 +36,8 @@ class Quiz extends Model
     /**
      * @return HasMany
      */
-    public function questions():HasMany
+    public function questionCategories():HasMany
     {
-        return $this->hasMany(Question::class,'question_id');
+        return $this->hasMany(QuestionCategory::class,'questionCategory_id');
     }
 }

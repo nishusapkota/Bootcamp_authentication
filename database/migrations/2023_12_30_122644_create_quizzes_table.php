@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('time');
             $table->string('retry_after');
             $table->boolean('status')->default(1);
-            $table->unsignedBigInteger('question_id');
-            $table->foreign('question_id')->references('id')->on('questions');
+            $table->unsignedBigInteger('questionCategory_id');
+            $table->foreign('questionCategory_id')->references('id')->on('question_categories');
             $table->softDeletes();
             $table->timestamps();
         });
